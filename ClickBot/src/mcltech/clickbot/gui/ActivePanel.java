@@ -35,7 +35,7 @@ public class ActivePanel extends JPanel implements MouseListener
    private enum STATE
    {
       READY, WAITING, RUNNING
-   };
+   }
 
    private static final long serialVersionUID = 1L;
    private final static Color bgColor = Color.BLACK;
@@ -45,20 +45,20 @@ public class ActivePanel extends JPanel implements MouseListener
    private final static String activeString = "ACTIVE";
 
    private STATE state;
-   private int divisions = 100;
-   private int timerCount = 0;
+   int divisions = 100;
+   int timerCount = 0;
    private int size = 100;
    private List<Integer> xPoints;
    private List<Integer> yPoints;
    private Timer timer;
-   private Point originalPoint;
+   Point originalPoint;
    private static final int maxMotion = 10;
    private ClickBot bot;
    private int timerDelay;
    int distance = 0;
 
    private JButton linkButton;
-   final private URI uri;
+   final URI uri;
 
    public ActivePanel()
       throws URISyntaxException
@@ -105,7 +105,7 @@ public class ActivePanel extends JPanel implements MouseListener
             {
                Desktop.getDesktop().browse(uri);
             }
-            catch (IOException e1)
+            catch (@SuppressWarnings("unused") IOException e1)
             { /* TODO: error handling */
             }
          }
@@ -117,15 +117,15 @@ public class ActivePanel extends JPanel implements MouseListener
 
    private void makeCirclePoints()
    {
-      xPoints = new ArrayList<Integer>();
-      yPoints = new ArrayList<Integer>();
+      xPoints = new ArrayList<>();
+      yPoints = new ArrayList<>();
       for (int ii = 0; ii < divisions; ii++)
       {
-         xPoints.add((int) (Math.sin(ii * 2.0 * Math.PI / divisions) * size / 2));
-         yPoints.add((int) (Math.cos(ii * 2.0 * Math.PI / divisions) * size / 2));
+         xPoints.add(Integer.valueOf((int) (Math.sin(ii * 2.0 * Math.PI / divisions) * size / 2)));
+         yPoints.add(Integer.valueOf((int) (Math.cos(ii * 2.0 * Math.PI / divisions) * size / 2)));
       }
-      xPoints.add(0);
-      yPoints.add(size / 2);
+      xPoints.add(Integer.valueOf(0));
+      yPoints.add(Integer.valueOf(size / 2));
    }
 
    private void drawCircularButton(Graphics2D g, int x, int y)
@@ -148,8 +148,8 @@ public class ActivePanel extends JPanel implements MouseListener
             g.setColor(stateColor.darker());
          int xCen = size / 2 + x;
          int yCen = size / 2 + y;
-         int[] xArr = { xCen, xPoints.get(ii) + xCen, xPoints.get(ii + 1) + xCen };
-         int[] yArr = { yCen, yPoints.get(ii) + yCen, yPoints.get(ii + 1) + yCen };
+         int[] xArr = { xCen, xPoints.get(ii).intValue() + xCen, xPoints.get(ii + 1).intValue() + xCen };
+         int[] yArr = { yCen, yPoints.get(ii).intValue() + yCen, yPoints.get(ii + 1).intValue() + yCen };
          g.fillPolygon(xArr, yArr, 3);
       }
    }
@@ -187,7 +187,7 @@ public class ActivePanel extends JPanel implements MouseListener
       g.drawString(curString, (int) (size / 2 + bounds.getCenterX()), size / 2 - (int) bounds.getCenterY());
    }
 
-   private void runRobot()
+   void runRobot()
    {
       state = STATE.RUNNING;
       timer.cancel();
@@ -241,10 +241,10 @@ public class ActivePanel extends JPanel implements MouseListener
       repaint();
    }
 
-   private Color blendColor(Color c1, Color c2, double ratio)
+   private static Color blendColor(Color c1, Color c2, double _ratio)
    {
       // re-sample ratio
-      ratio = (ratio - 0.5) * 2;
+      double ratio = (_ratio - 0.5) * 2;
       if (ratio > 1)
          ratio = 1.0;
       else if (ratio < 0)
