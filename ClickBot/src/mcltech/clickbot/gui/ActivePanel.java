@@ -72,10 +72,10 @@ public class ActivePanel extends JPanel implements MouseListener
       state = STATE.READY;
       timerDelay = 1000;
 
-      uri = new URI("http://McLauthlinTech.com");
+      uri = new URI("http://McLauthlin.tech");
 
       linkButton = new JButton();
-      linkButton.setText("<HTML><u><i>McLauthlinTech.com</i></u></HTML>");
+      linkButton.setText("<HTML><u><i>McLauthlin.tech</i></u></HTML>");
       linkButton.setHorizontalAlignment(SwingConstants.RIGHT);
       linkButton.setBorderPainted(false);
       linkButton.setOpaque(false);
